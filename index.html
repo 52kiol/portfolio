@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品集</title>
+<style>
+  /* ===== iOS 风格基础 ===== */
+  :root {
+    --bg: #f2f2f7;
+    --card: #ffffff;
+    --text: #1c1c1e;
+    --text2: #636366;
+    --text3: #aeaeb2;
+    --blue: #007aff;
+    --radius: 16px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== 导航 ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(242,242,247,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    padding: 12px 0;
+  }
+  nav .inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 24px;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--blue);
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* ===== 主容器 ===== */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ===== 头部 ===== */
+  .hero {
+    text-align: center;
+    padding: 60px 0 40px;
+  }
+  .hero .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e0e0e0, #c8c8cc);
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .hero p {
+    color: var(--text2);
+    font-size: 16px;
+    margin-top: 6px;
+  }
+
+  /* ===== 分类标题 ===== */
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 36px 0 16px;
+    letter-spacing: -0.2px;
+  }
+
+  /* ===== 卡片 ===== */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  .card .label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .card .desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+  .card .meta {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 10px;
+    display: flex;
+    gap: 16px;
+  }
+
+  /* ===== 图片网格 ===== */
+  .img-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .img-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .img-card .placeholder {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #e8e8ed, #dcdce0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text3);
+    font-size: 13px;
+  }
+  .img-card .info {
+    padding: 12px 14px;
+  }
+  .img-card .info h4 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .img-card .info span {
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  /* ===== 视频区 ===== */
+  .video-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+  }
+  .video-card .placeholder {
+    aspect-ratio: 16/9;
+    background: #1c1c1e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    gap: 8px;
+  }
+  .video-card .placeholder .play {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .video-card .info {
+    padding: 16px;
+  }
+
+  /* ===== 页脚 ===== */
+  footer {
+    text-align: center;
+    color: var(--text3);
+    font-size: 13px;
+    padding: 40px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav>
+  <div class="inner">
+    <a href="#videos">视频</a>
+    <a href="#images">图片</a>
+    <a href="#storyboards">分镜</a>
+    <a href="#characters">人物卡</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- 头部 -->
+  <div class="hero">
+    <div class="avatar">&#x1f3ac;</div>
+    <h1>我的作品集</h1>
+    <p>武侠分镜 · 岩井俊二风格短片 · 角色设计</p>
+  </div>
+
+  <!-- 视频 -->
+  <div class="section-title" id="videos">&#x25b6; 视频</div>
+
+  <div class="video-card">
+    <video src="日风短片.mp4" controls style="width:100%; display:block; border-radius:16px 16px 0 0;"></video>
+    <div class="info">
+      <h3>日风短片</h3>
+      <p class="desc">原创日式风格短片</p>
+      <p class="meta">点击播放</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <div class="placeholder">
+      <div class="play">&#9654;</div>
+    </div>
+    <div class="info">
+      <h3>交错 MV</h3>
+      <p class="desc">日式复古胶片风格，男女主同城始终错过 · 60s</p>
+      <p class="meta">岩井俊二风格 · Super 16mm · 记忆式剪辑</p>
+    </div>
+  </div>
+
+  <!-- 图片 -->
+  <div class="section-title" id="images">&#x1f5bc; 图片</div>
+
+  <div class="img-grid">
+    <div class="img-card">
+      <div class="placeholder">图书室 · 斜光</div>
+      <div class="info">
+        <h4>图书室 · 斜光</h4>
+        <span>Super 16mm · B型寄存器</span>
+      </div>
+    </div>
+    <div class="img-card">
+      <div class="placeholder">河堤 · 奔跑</div>
+      <div class="info">
+        <h4>河堤 · 奔跑</h4>
+        <span>miniDV · A1型寄存器</span>
+      </div>
+    </div>
+    <div class="img-card">
+      <div class="placeholder">铁轨 · 追车</div>
+      <div class="info">
+        <h4>铁轨 · 追车</h4>
+        <span>miniDV · A2型寄存器</span>
+      </div>
+    </div>
+    <div class="img-card">
+      <div class="placeholder">电塔 · 仰望</div>
+      <div class="info">
+        <h4>电塔 · 仰望</h4>
+        <span>miniDV · C型寄存器</span>
+      </div>
+    </div>
+    <div class="img-card">
+      <div class="placeholder">抽烟 · 后巷</div>
+      <div class="info">
+        <h4>抽烟 · 后巷</h4>
+        <span>miniDV · D型寄存器</span>
+      </div>
+    </div>
+    <div class="img-card">
+      <div class="placeholder">教室 · 窗边</div>
+      <div class="info">
+        <h4>教室 · 窗边</h4>
+        <span>Super 16mm · B型寄存器</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分镜 -->
+  <div class="section-title" id="storyboards">&#x1f3ac; 分镜</div>
+
+  <div class="card">
+    <div class="label">分镜 · 浪客行</div>
+    <h3>巷口 → 现身 → 断骨 → 离去</h3>
+    <p class="desc">窄巷中浪客与疤面刀客的 33s 完整对决，四段连续分镜。固定机位一点透视，水墨写实风格。</p>
+    <p class="meta">4 段 · 每段 ≤10s · GROK 六段式格式</p>
+  </div>
+
+  <div class="card">
+    <div class="label">分镜 · 纵横</div>
+    <h3>街头觉醒 → 破庙相遇 → 释放 → 落</h3>
+    <p class="desc">武与文的 60s 视觉短片。蜘蛛侠纵横宇宙 × 水墨 × 涂鸦。四模块混合渲染。</p>
+    <p class="meta">7 段 · 每段 ≤10s · 首帧生视频模式</p>
+  </div>
+
+  <div class="card">
+    <div class="label">分镜 · 交错 MV</div>
+    <h3>城市醒来 → 半径收缩 → 桥上 → 雨 → 电车 → 长椅</h3>
+    <p class="desc">日式复古胶片 MV，男女主同城始终错过。岩井俊二式关系影像，记忆式剪辑。</p>
+    <p class="meta">6 段 · 每段 ≤10s · 首帧生视频模式</p>
+  </div>
+
+  <div class="card">
+    <div class="label">镜头链 · 桥上四镜</div>
+    <h3>远景 → 中景 → 近景 → 特写</h3>
+    <p class="desc">高潮段四镜叙事，两人在桥上的三步距离。四镜完整闭环——接近、停在同一空间、失之交臂、倒影目送背影。</p>
+    <p class="meta">日式复古胶片 · 写实 × Super 16mm</p>
+  </div>
+
+  <!-- 人物卡 -->
+  <div class="section-title" id="characters">&#x1f464; 人物卡</div>
+
+  <div class="card">
+    <div class="label">角色 · 浪客行</div>
+    <h3>浪客</h3>
+    <p class="desc">精瘦身形，28岁，灰白旧布交领短衣。黑发乱遮半脸，剑挂右腰。井上雄彦水墨写实风。</p>
+    <p class="meta">三视图 · 转面序列 · 面部特写 · 手部特写</p>
+  </div>
+
+  <div class="card">
+    <div class="label">角色 · 浪客行</div>
+    <h3>疤面刀客</h3>
+    <p class="desc">壮实体型，35岁，墨黑短衣，左脸火焰状烧伤疤痕瓷白。原为寨中首席刀手。</p>
+    <p class="meta">三视图 · 转面序列 · 烧伤特写 · 手部特写</p>
+  </div>
+
+  <div class="card">
+    <div class="label">角色 · 纵横</div>
+    <h3>武</h3>
+    <p class="desc">18岁少年，精瘦未满。灰白短衣，体内金色涂鸦式内力暴走。瞳孔从褐变金。</p>
+    <p class="meta">三视图 · 转面序列 · 面部特写 · 能量视觉体系</p>
+  </div>
+
+  <div class="card">
+    <div class="label">角色 · 纵横</div>
+    <h3>文</h3>
+    <p class="desc">18岁画师。黑直长马尾，靛蓝短襦，右手执秃毛笔。能看见气的流动。</p>
+    <p class="meta">三视图 · 转面序列 · 执笔手部特写 · 秃毛笔道具特写</p>
+  </div>
+
+</div>
+
+<footer>
+  用纯 HTML + CSS 写成 · 本地打开即看
+</footer>
+
+</body>
+</html>
