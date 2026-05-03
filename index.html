@@ -187,6 +187,8 @@
     <a href="#music">原创音乐作品</a>
     <a href="#drama">AI漫剧短剧</a>
     <a href="#assets">案例资产库</a>
+    <a href="#comfyui">ComfyUI工作流</a>
+    <a href="#agent">Agent Skill</a>
   </div>
 </nav>
 
@@ -195,7 +197,7 @@
   <div class="hero">
     <img src="头像.jpg" alt="头像" style="width:96px; height:96px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,0.1); margin-bottom:16px;">
     <h1>刘正武52Kiol</h1>
-    <p>AIGC/影视混剪/视觉设计/AI漫剧短剧/音乐后期制作/个人主页定制</p>
+    <p>AIGC/影视混剪/视觉设计/AI漫剧短剧/音乐后期制作/个人主页定制/开源模型工作流搭建</p>
     <p style="font-size:13px; color:#555; margin-top:6px; letter-spacing:0;">tel: 15616931964&nbsp;&nbsp;|&nbsp;&nbsp;mail: muageeyen@gmail.com</p>
   </div>
 
@@ -204,11 +206,11 @@
 
   <div class="video-grid">
   <div class="video-card glass-card">
-    <video src="日风短片.mp4" controls style="aspect-ratio:16/9;"></video>
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1wsRwBjEp1&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
     <div class="info">
       <h3>AIGC日风短片</h3>
-      <p class="desc">原创日式风格短片</p>
-      <p class="meta">岩井俊二导演风格</p>
+      <p class="desc">老式收音机下藏着的是那个夏天</p>
+      <p class="meta">岩井俊二导演风格 · 青春校园</p>
     </div>
   </div>
 
@@ -385,19 +387,35 @@
   <div class="section-title" id="assets">案例资产库</div>
 
   <style>
-    .asset-project { margin-bottom: 10px; }
-    .asset-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; cursor: pointer; user-select: none;
+    .asset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .asset-project { overflow: hidden; margin-bottom: 0; }
+    @media (max-width: 640px) {
+      .asset-grid { grid-template-columns: 1fr; }
     }
-    .asset-header h3 { font-size: 15px; font-weight: 600; color: #f0f0f0; }
-    .asset-header .arrow { font-size: 12px; color: #666; transition: transform 0.25s; }
-    .asset-project.open .asset-header .arrow { transform: rotate(180deg); }
+    .asset-cover {
+      width: 100%; display: block; cursor: pointer;
+      border-radius: 14px 14px 0 0;
+    }
+    .asset-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; cursor: pointer; user-select: none;
+    }
+    .asset-meta h3 { font-size: 15px; font-weight: 600; color: #f0f0f0; }
+    .asset-meta .arrow { font-size: 12px; color: #666; transition: transform 0.25s; }
+    .asset-project.open .asset-meta .arrow { transform: rotate(180deg); }
+    .asset-body { display: none; padding: 0 20px 16px; }
+    .asset-project.open .asset-body { display: block; }
+    .asset-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .asset-tab {
+      padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px; color: #888; cursor: pointer; transition: all 0.2s;
+      background: none;
+    }
+    .asset-tab.on { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.2); }
     .asset-gallery {
       display: none; grid-template-columns: repeat(3, 1fr); gap: 8px;
-      padding: 0 20px 16px;
     }
-    .asset-project.open .asset-gallery { display: grid; }
+    .asset-gallery.on { display: grid; }
     .asset-gallery img {
       width: 100%; aspect-ratio: 16/10; object-fit: cover;
       border-radius: 8px; cursor: pointer; transition: transform 0.2s;
@@ -408,27 +426,159 @@
     }
   </style>
 
+  <div class="asset-grid">
   <div class="card glass-card asset-project">
-    <div class="asset-header" onclick="this.parentElement.classList.toggle('open')">
-      <h3>浪客行 — 窄巷决斗</h3>
+    <img class="asset-cover" src="谋定天下封面.png" onclick="this.parentElement.classList.toggle('open')">
+    <div class="asset-meta" onclick="this.parentElement.classList.toggle('open')">
+      <h3>三国志-谋定天下</h3>
       <span class="arrow">▼</span>
     </div>
-    <div class="asset-gallery">
-      <img src="水墨武侠1.png" alt="">
-      <img src="水墨武侠2.png" alt="">
+    <div class="asset-body">
+      <div class="asset-tabs" onclick="event.stopPropagation();">
+        <span class="asset-tab on" onclick="switchTab(this,'san-chars')">人物资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'san-scenes')">场景资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'san-props')">道具资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'san-boards')">分镜/宫格</span>
+      </div>
+      <div class="asset-gallery on" id="san-chars">
+        <img src="三国志-谋定天下-人物资产/两边.png" alt="两边">
+        <img src="三国志-谋定天下-人物资产/之狼.png" alt="之狼">
+        <img src="三国志-谋定天下-人物资产/九爷.png" alt="九爷">
+        <img src="三国志-谋定天下-人物资产/伏黑三视图.png" alt="伏黑三视图">
+        <img src="三国志-谋定天下-人物资产/北伐三视图.png" alt="北伐三视图">
+        <img src="三国志-谋定天下-人物资产/北伐三视图姜维版本.png" alt="北伐三视图姜维版本">
+        <img src="三国志-谋定天下-人物资产/北伐吕布.png" alt="北伐吕布">
+        <img src="三国志-谋定天下-人物资产/夏云.png" alt="夏云">
+        <img src="三国志-谋定天下-人物资产/小兵.png" alt="小兵">
+        <img src="三国志-谋定天下-人物资产/胖胖三视图.png" alt="胖胖三视图">
+        <img src="三国志-谋定天下-人物资产/舌头三视图.png" alt="舌头三视图">
+        <img src="三国志-谋定天下-人物资产/舌头三视图马超版.png" alt="舌头三视图马超版">
+        <img src="三国志-谋定天下-人物资产/舌头兵.png" alt="舌头兵">
+        <img src="三国志-谋定天下-人物资产/舌头兵2.png" alt="舌头兵2">
+        <img src="三国志-谋定天下-人物资产/舌头兵3.png" alt="舌头兵3">
+        <img src="三国志-谋定天下-人物资产/舌头兵5.png" alt="舌头兵5">
+      </div>
+      <div class="asset-gallery" id="san-scenes">
+        <img src="三国志-谋定天下-场景资产/8c0ac08f-bcae-4ca2-b844-c4ba1c1be82f.png" alt="">
+        <img src="三国志-谋定天下-场景资产/九门军长.png" alt="九门军长">
+        <img src="三国志-谋定天下-场景资产/军营场景.png" alt="军营场景">
+        <img src="三国志-谋定天下-场景资产/微信图片_20260427174924_22951_967.png" alt="">
+        <img src="三国志-谋定天下-场景资产/朝廷内部.png" alt="朝廷内部">
+        <img src="三国志-谋定天下-场景资产/舌头大营.png" alt="舌头大营">
+      </div>
+      <div class="asset-gallery" id="san-props">
+        <img src="三国志-谋定天下-道具资产/八百里加急信.png" alt="八百里加急信">
+        <img src="三国志-谋定天下-道具资产/地图.png" alt="地图">
+        <img src="三国志-谋定天下-道具资产/胖虎情书.png" alt="胖虎情书">
+        <img src="三国志-谋定天下-道具资产/金珠.png" alt="金珠">
+      </div>
+      <div class="asset-gallery" id="san-boards">
+        <img src="三国志-谋定天下-分镜宫格资产/北伐不骑马.png" alt="北伐不骑马">
+        <img src="三国志-谋定天下-分镜宫格资产/北伐骑马.png" alt="北伐骑马">
+        <img src="三国志-谋定天下-分镜宫格资产/战场杀敌.png" alt="战场杀敌">
+        <img src="三国志-谋定天下-分镜宫格资产/杀敌2.png" alt="杀敌2">
+        <img src="三国志-谋定天下-分镜宫格资产/胜利庆祝.png" alt="胜利庆祝">
+        <img src="三国志-谋定天下-分镜宫格资产/舌头北伐背靠背.png" alt="舌头北伐背靠背">
+        <img src="三国志-谋定天下-分镜宫格资产/骑马舌头.png" alt="骑马舌头">
+      </div>
     </div>
   </div>
 
   <div class="card glass-card asset-project">
-    <div class="asset-header" onclick="this.parentElement.classList.toggle('open')">
-      <h3>纵横江湖 — 教室社交</h3>
+    <img class="asset-cover" src="封面舌头.png" onclick="this.parentElement.classList.toggle('open')">
+    <div class="asset-meta" onclick="this.parentElement.classList.toggle('open')">
+      <h3>三国志-舌头吐哺 天下归心</h3>
       <span class="arrow">▼</span>
     </div>
-    <div class="asset-gallery">
-      <img src="教室社交.jpg" alt="">
-      <img src="女侠.png" alt="">
+    <div class="asset-body">
+      <div class="asset-tabs" onclick="event.stopPropagation();">
+        <span class="asset-tab on" onclick="switchTab(this,'zong-chars')">人物资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'zong-scenes')">场景资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'zong-props')">道具资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'zong-boards')">分镜/宫格</span>
+      </div>
+      <div class="asset-gallery on" id="zong-chars">
+        <img src="三国志-谋定天下-人物资产/两边.png" alt="两边">
+        <img src="三国志-谋定天下-人物资产/之狼.png" alt="之狼">
+        <img src="三国志-谋定天下-人物资产/九爷.png" alt="九爷">
+        <img src="三国志-谋定天下-人物资产/伏黑三视图.png" alt="伏黑三视图">
+        <img src="三国志-谋定天下-人物资产/北伐三视图.png" alt="北伐三视图">
+        <img src="三国志-谋定天下-人物资产/北伐三视图姜维版本.png" alt="北伐三视图姜维版本">
+        <img src="三国志-谋定天下-人物资产/北伐吕布.png" alt="北伐吕布">
+        <img src="三国志-谋定天下-人物资产/夏云.png" alt="夏云">
+        <img src="三国志-谋定天下-人物资产/小兵.png" alt="小兵">
+        <img src="三国志-谋定天下-人物资产/胖胖三视图.png" alt="胖胖三视图">
+        <img src="三国志-谋定天下-人物资产/舌头三视图.png" alt="舌头三视图">
+        <img src="三国志-谋定天下-人物资产/舌头三视图马超版.png" alt="舌头三视图马超版">
+        <img src="三国志-谋定天下-人物资产/舌头兵.png" alt="舌头兵">
+        <img src="三国志-谋定天下-人物资产/舌头兵2.png" alt="舌头兵2">
+        <img src="三国志-谋定天下-人物资产/舌头兵3.png" alt="舌头兵3">
+        <img src="三国志-谋定天下-人物资产/舌头兵5.png" alt="舌头兵5">
+      </div>
+      <div class="asset-gallery" id="zong-scenes">
+        <img src="三国志-谋定天下-场景资产/8c0ac08f-bcae-4ca2-b844-c4ba1c1be82f.png" alt="">
+        <img src="三国志-谋定天下-场景资产/九门军长.png" alt="九门军长">
+        <img src="三国志-谋定天下-场景资产/军营场景.png" alt="军营场景">
+        <img src="三国志-谋定天下-场景资产/微信图片_20260427174924_22951_967.png" alt="">
+        <img src="三国志-谋定天下-场景资产/朝廷内部.png" alt="朝廷内部">
+        <img src="三国志-谋定天下-场景资产/舌头大营.png" alt="舌头大营">
+      </div>
+      <div class="asset-gallery" id="zong-props">
+        <img src="三国志-谋定天下-道具资产/八百里加急信.png" alt="八百里加急信">
+        <img src="三国志-谋定天下-道具资产/地图.png" alt="地图">
+        <img src="三国志-谋定天下-道具资产/胖虎情书.png" alt="胖虎情书">
+        <img src="三国志-谋定天下-道具资产/金珠.png" alt="金珠">
+      </div>
+      <div class="asset-gallery" id="zong-boards">
+        <img src="三国志-谋定天下-分镜宫格资产/北伐不骑马.png" alt="北伐不骑马">
+        <img src="三国志-谋定天下-分镜宫格资产/北伐骑马.png" alt="北伐骑马">
+        <img src="三国志-谋定天下-分镜宫格资产/战场杀敌.png" alt="战场杀敌">
+        <img src="三国志-谋定天下-分镜宫格资产/杀敌2.png" alt="杀敌2">
+        <img src="三国志-谋定天下-分镜宫格资产/胜利庆祝.png" alt="胜利庆祝">
+        <img src="三国志-谋定天下-分镜宫格资产/舌头北伐背靠背.png" alt="舌头北伐背靠背">
+        <img src="三国志-谋定天下-分镜宫格资产/骑马舌头.png" alt="骑马舌头">
+      </div>
     </div>
   </div>
+  </div>
+
+  <!-- 历史资产库 -->
+  <div class="card glass-card asset-project" style="margin-top:14px;">
+    <div class="asset-meta" onclick="this.parentElement.classList.toggle('open')">
+      <h3>历史资产库</h3>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="asset-body">
+      <div class="asset-tabs" onclick="event.stopPropagation();">
+        <span class="asset-tab on" onclick="switchTab(this,'hist-chars')">人物资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'hist-scenes')">场景资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'hist-props')">道具资产</span>
+        <span class="asset-tab" onclick="switchTab(this,'hist-boards')">分镜/宫格</span>
+      </div>
+      <div class="asset-gallery on" id="hist-chars"></div>
+      <div class="asset-gallery" id="hist-scenes"></div>
+      <div class="asset-gallery" id="hist-props"></div>
+      <div class="asset-gallery" id="hist-boards"></div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab, galleryId) {
+      const tabs = tab.parentElement.querySelectorAll('.asset-tab');
+      tabs.forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+      const galleries = tab.parentElement.parentElement.querySelectorAll('.asset-gallery');
+      galleries.forEach(g => g.classList.remove('on'));
+      document.getElementById(galleryId).classList.add('on');
+    }
+  </script>
+
+  <!-- ComfyUI工作流 -->
+  <div class="section-title" id="comfyui">ComfyUI工作流</div>
+  <div class="card glass-card"><p class="desc" style="text-align:center;">工作流文件与展示</p></div>
+
+  <div class="section-title" id="agent">Agent Skill</div>
+  <div class="card glass-card"><p class="desc" style="text-align:center;">Agent技能展示</p></div>
 
   </div>
 
