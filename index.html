@@ -3,249 +3,207 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>作品集</title>
+<title>刘正武52Kiol</title>
 <style>
-  /* ===== iOS 风格基础 ===== */
-  :root {
-    --bg: #f2f2f7;
-    --card: #ffffff;
-    --text: #1c1c1e;
-    --text2: #636366;
-    --text3: #aeaeb2;
-    --blue: #007aff;
-    --radius: 16px;
-    --shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: "SF Pro Display", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: #0d0d0d;
+    color: #e0e0e0;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
-  /* ===== 导航 ===== */
+  /* ===== 背景层 · 四模块混合纹理 ===== */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0;
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+  /* 网点层 */
+  .bg-layer::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 0.5px, transparent 0.5px);
+    background-size: 8px 8px;
+    animation: halftone-drift 20s linear infinite;
+  }
+  /* CMYK错版层 */
+  .bg-layer::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 120% 80% at 20% 10%, rgba(0,255,255,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 100% 90% at 80% 40%, rgba(255,0,255,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 110% 70% at 50% 80%, rgba(255,255,0,0.03) 0%, transparent 50%);
+    mix-blend-mode: screen;
+    animation: cmyk-shift 15s ease-in-out infinite alternate;
+  }
+  /* 水墨纹理 SVG */
+  .ink-texture {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: 0.25;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Cfilter id='ink'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23ink)' opacity='0.4'/%3E%3C/svg%3E");
+    background-size: cover;
+    animation: ink-breathe 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes halftone-drift {
+    0% { background-position: 0 0; }
+    100% { background-position: 4px 4px; }
+  }
+  @keyframes cmyk-shift {
+    0% { transform: translate(0, 0); opacity: 0.6; }
+    50% { transform: translate(-2px, 3px); opacity: 0.8; }
+    100% { transform: translate(2px, -1px); opacity: 0.6; }
+  }
+  @keyframes ink-breathe {
+    0% { opacity: 0.2; }
+    100% { opacity: 0.35; }
+  }
+
+  /* ===== 导航 · 真毛玻璃 ===== */
   nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(242,242,247,0.85);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-bottom: 0.5px solid rgba(0,0,0,0.08);
-    padding: 12px 0;
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.25), rgba(13,13,13,0.05));
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 0;
   }
   nav .inner {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    gap: 24px;
+    max-width: 800px; margin:0 auto; padding:0 24px;
+    display: flex; gap: 28px;
   }
   nav a {
-    text-decoration: none;
-    color: var(--blue);
-    font-size: 15px;
-    font-weight: 500;
+    text-decoration: none; color: #999; font-size: 14px; font-weight: 500;
+    letter-spacing: 0.5px; transition: color 0.2s;
   }
+  nav a:hover { color: #fff; }
 
-  /* ===== 主容器 ===== */
+  /* ===== 主容器 · 浮在背景之上 ===== */
   .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 32px 20px 80px;
+    position: relative; z-index: 1;
+    max-width: 800px; margin:0 auto; padding: 48px 24px 80px;
   }
 
   /* ===== 头部 ===== */
-  .hero {
-    text-align: center;
-    padding: 60px 0 40px;
-  }
-  .hero .avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e0e0e0, #c8c8cc);
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 36px;
-  }
+  .hero { padding: 80px 0 60px; text-align: center; }
   .hero h1 {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
+    font-family: "SF Pro Display", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+    font-size: 32px; font-weight: 700; letter-spacing: -0.5px;
+    color: #f5f5f5; margin-bottom: 8px;
   }
   .hero p {
-    color: var(--text2);
-    font-size: 16px;
-    margin-top: 6px;
+    font-size: 14px; color: #666; letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
   /* ===== 分类标题 ===== */
   .section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 36px 0 16px;
-    letter-spacing: -0.2px;
+    font-size: 13px; font-weight: 600; color: #555;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin: 56px 0 20px; padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* ===== 卡片 ===== */
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 14px;
-    box-shadow: var(--shadow);
-    transition: transform 0.15s ease;
+  /* ===== 毛玻璃卡片（基础） ===== */
+  .glass-card {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    will-change: transform;
+    transform-style: preserve-3d;
+    perspective: 800px;
   }
-  .card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+
+  /* ===== 视频卡片 ===== */
+  .video-card {
+    overflow: hidden;
+    margin-bottom: 16px;
   }
-  .card .label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--blue);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-  }
-  .card h3 {
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .card .desc {
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.5;
-  }
-  .card .meta {
-    font-size: 12px;
-    color: var(--text3);
-    margin-top: 10px;
-    display: flex;
-    gap: 16px;
-  }
+  .video-card video,
+  .video-card iframe { width:100%; display:block; border:none; }
+  .video-card .info { padding: 20px 22px; }
+  .video-card h3 { font-size: 17px; font-weight: 600; color: #f0f0f0; margin-bottom: 4px; }
+  .video-card .desc { font-size: 13px; color: #888; line-height: 1.5; }
+  .video-card .meta { font-size: 11px; color: #555; margin-top: 8px; }
 
   /* ===== 图片网格 ===== */
-  .img-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  .img-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
+  .img-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .img-card { overflow: hidden; }
   .img-card .placeholder {
-    aspect-ratio: 16/9;
-    background: linear-gradient(135deg, #e8e8ed, #dcdce0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text3);
-    font-size: 13px;
+    aspect-ratio: 16/10; background: rgba(255,255,255,0.03);
+    display: flex; align-items: center; justify-content: center;
+    color: #444; font-size: 12px; letter-spacing: 0.5px;
   }
-  .img-card .info {
-    padding: 12px 14px;
-  }
-  .img-card .info h4 {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .img-card .info span {
-    font-size: 12px;
-    color: var(--text2);
-  }
+  .img-card .info { padding: 14px 16px; }
+  .img-card .info h4 { font-size: 13px; font-weight: 600; color: #e0e0e0; }
+  .img-card .info span { font-size: 11px; color: #666; }
 
-  /* ===== 视频区 ===== */
-  .video-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    margin-bottom: 14px;
+  /* ===== 文字卡片 ===== */
+  .card { padding: 22px 24px; margin-bottom: 12px; }
+  .card .label {
+    font-size: 10px; font-weight: 600; color: #ff6b3d;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
   }
-  .video-card .placeholder {
-    aspect-ratio: 16/9;
-    background: #1c1c1e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 14px;
-    gap: 8px;
-  }
-  .video-card .placeholder .play {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
-  .video-card .info {
-    padding: 16px;
-  }
+  .card h3 { font-size: 16px; font-weight: 600; color: #f0f0f0; margin-bottom: 4px; }
+  .card .desc { font-size: 13px; color: #888; line-height: 1.5; }
+  .card .meta { font-size: 11px; color: #555; margin-top: 10px; }
 
   /* ===== 页脚 ===== */
-  footer {
-    text-align: center;
-    color: var(--text3);
-    font-size: 13px;
-    padding: 40px 0;
+  footer { text-align: center; color: #444; font-size: 12px; padding: 60px 0; position: relative; z-index: 1; }
+
+  /* ===== 手机 ===== */
+  @media (max-width: 640px) {
+    .container { padding: 28px 16px 60px; }
+    .hero { padding: 48px 0 40px; }
+    .hero h1 { font-size: 26px; }
+    .img-grid { grid-template-columns: repeat(2, 1fr); }
+    .card { padding: 18px 18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- 导航 -->
+<div class="bg-layer"></div>
+<div class="ink-texture"></div>
+
 <nav>
   <div class="inner">
-    <a href="#videos">视频</a>
-    <a href="#images">图片</a>
-    <a href="#storyboards">分镜</a>
-    <a href="#characters">人物卡</a>
+    <a href="#videos">AIGC视频</a>
+    <a href="#images">影视混剪</a>
+    <a href="#storyboards">分镜图</a>
+    <a href="#characters">人物资产卡</a>
+    <a href="#music">原创音乐作品</a>
   </div>
 </nav>
 
 <div class="container">
 
-  <!-- 头部 -->
   <div class="hero">
-    <div class="avatar">&#x1f3ac;</div>
-    <h1>刘正武52Kiol的作品集</h1>
-    <p>AIGC</p>
+    <h1>刘正武52Kiol</h1>
+    <p>AIGC/影视混剪/视觉设计/音乐制作</p>
   </div>
 
   <!-- 视频 -->
-  <div class="section-title" id="videos">&#x25b6; 视频</div>
+  <div class="section-title" id="videos">视频</div>
 
-  <div class="video-card">
-    <video src="日风短片.mp4" controls style="width:100%; display:block; border-radius:16px 16px 0 0;"></video>
+  <div class="video-card glass-card">
+    <video src="日风短片.mp4" controls style="aspect-ratio:16/9;"></video>
     <div class="info">
-      <h3>日式复古电影感短片</h3>
-      <p class="desc">岩井俊二风格·日系</p>
-      <p class="meta">校园青春题材</p>
+      <h3>日风短片</h3>
+      <p class="desc">原创日式风格短片</p>
+      <p class="meta">点击播放</p>
     </div>
   </div>
 
-  <div class="video-card">
-    <video src="武侠风特写镜头.mp4" controls style="width:100%; display:block; border-radius:16px 16px 0 0;"></video>
+  <div class="video-card glass-card">
+    <video src="武侠风特写镜头.mp4" controls style="aspect-ratio:16/9;"></video>
     <div class="info">
       <h3>武侠风特写镜头</h3>
       <p class="desc">江湖美学 · 侠客行</p>
@@ -253,8 +211,8 @@
     </div>
   </div>
 
-  <div class="video-card">
-    <video src="霓虹江湖.mp4" controls style="width:100%; display:block; border-radius:16px 16px 0 0;"></video>
+  <div class="video-card glass-card">
+    <video src="霓虹江湖.mp4" controls style="aspect-ratio:16/9;"></video>
     <div class="info">
       <h3>霓虹江湖</h3>
       <p class="desc">东方水墨笔触 · 现代街头视觉</p>
@@ -262,129 +220,138 @@
     </div>
   </div>
 
-  <div class="video-card">
-    <iframe src="//player.bilibili.com/player.html?bvid=BV1VJoiBvEQD&high_quality=1" style="width:100%; aspect-ratio:16/9; border:none; display:block; border-radius:16px 16px 0 0;" allowfullscreen></iframe>
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1VJoiBvEQD&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
     <div class="info">
       <h3>心随风动</h3>
-      <p class="desc">太过在意 · 便会失去本心</p>
-      <p class="meta">自在江湖</p>
+      <p class="desc">太过在意 便会失去本心 · 身在江湖 心随风动</p>
+      <p class="meta">B站播放</p>
     </div>
   </div>
 
-  <div class="video-card">
-    <iframe src="//player.bilibili.com/player.html?bvid=BV1utRcBxEZ7&high_quality=1" style="width:100%; aspect-ratio:16/9; border:none; display:block; border-radius:16px 16px 0 0;" allowfullscreen></iframe>
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1utRcBxEZ7&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
     <div class="info">
       <h3>寒江孤影</h3>
       <p class="desc">孤舟 · 江雪 · 独酌</p>
-      <p class="meta">相逢何必曾相识 </p>
+      <p class="meta">相逢何必曾相识 · B站播放</p>
+    </div>
+  </div>
+
+  <!-- 音乐 -->
+  <div class="section-title" id="music">音乐</div>
+
+  <div class="card glass-card">
+    <audio src="我只是你的过客.mp3" controls style="width:100%; display:block;"></audio>
+    <div style="padding:16px 22px;">
+      <h3>我只是你的过客#刘正武/于嘉懿/何雨南</h3>
+      <p class="desc"></p>
+    </div>
+  </div>
+
+  <div class="card glass-card">
+    <audio src="song_1974181331.mp3" controls style="width:100%; display:block;"></audio>
+    <div style="padding:16px 22px;">
+      <h3>爱能打破时空但跨不过距离#刘正武</h3>
+      <p class="desc"></p>
+    </div>
+  </div>
+
+  <div class="card glass-card">
+    <audio src="song_1954853016.mp3" controls style="width:100%; display:block;"></audio>
+    <div style="padding:16px 22px;">
+      <h3>不合时宜的遇见#刘正武/王子明</h3>
+      <p class="desc"></p>
     </div>
   </div>
 
   <!-- 图片 -->
-  <div class="section-title" id="images">&#x1f5bc; 图片</div>
+  <div class="section-title" id="images">图片</div>
 
   <div class="img-grid">
-    <div class="img-card">
+    <div class="img-card glass-card">
       <div class="placeholder">图书室 · 斜光</div>
-      <div class="info">
-        <h4>图书室 · 斜光</h4>
-        <span>Super 16mm · B型寄存器</span>
-      </div>
+      <div class="info"><h4>图书室 · 斜光</h4><span>Super 16mm</span></div>
     </div>
-    <div class="img-card">
+    <div class="img-card glass-card">
       <div class="placeholder">河堤 · 奔跑</div>
-      <div class="info">
-        <h4>河堤 · 奔跑</h4>
-        <span>miniDV · A1型寄存器</span>
-      </div>
+      <div class="info"><h4>河堤 · 奔跑</h4><span>miniDV</span></div>
     </div>
-    <div class="img-card">
+    <div class="img-card glass-card">
       <div class="placeholder">铁轨 · 追车</div>
-      <div class="info">
-        <h4>铁轨 · 追车</h4>
-        <span>miniDV · A2型寄存器</span>
-      </div>
+      <div class="info"><h4>铁轨 · 追车</h4><span>miniDV</span></div>
     </div>
-    <div class="img-card">
+    <div class="img-card glass-card">
       <div class="placeholder">电塔 · 仰望</div>
-      <div class="info">
-        <h4>电塔 · 仰望</h4>
-        <span>miniDV · C型寄存器</span>
-      </div>
+      <div class="info"><h4>电塔 · 仰望</h4><span>miniDV</span></div>
     </div>
-    <div class="img-card">
+    <div class="img-card glass-card">
       <div class="placeholder">抽烟 · 后巷</div>
-      <div class="info">
-        <h4>抽烟 · 后巷</h4>
-        <span>miniDV · D型寄存器</span>
-      </div>
+      <div class="info"><h4>抽烟 · 后巷</h4><span>miniDV</span></div>
     </div>
-    <div class="img-card">
+    <div class="img-card glass-card">
       <div class="placeholder">教室 · 窗边</div>
-      <div class="info">
-        <h4>教室 · 窗边</h4>
-        <span>Super 16mm · B型寄存器</span>
-      </div>
+      <div class="info"><h4>教室 · 窗边</h4><span>Super 16mm</span></div>
     </div>
   </div>
 
   <!-- 分镜 -->
-  <div class="section-title" id="storyboards">&#x1f3ac; 分镜</div>
+  <div class="section-title" id="storyboards">分镜</div>
 
-  <div class="card">
-    <div class="label">分镜 · 浪客行</div>
+  <div class="card glass-card">
+    <div class="label">浪客行</div>
     <h3>巷口 → 现身 → 断骨 → 离去</h3>
     <p class="desc">窄巷中浪客与疤面刀客的 33s 完整对决，四段连续分镜。固定机位一点透视，水墨写实风格。</p>
     <p class="meta">4 段 · 每段 ≤10s · GROK 六段式格式</p>
   </div>
 
-  <div class="card">
-    <div class="label">分镜 · 纵横</div>
+  <div class="card glass-card">
+    <div class="label">纵横</div>
     <h3>街头觉醒 → 破庙相遇 → 释放 → 落</h3>
     <p class="desc">武与文的 60s 视觉短片。蜘蛛侠纵横宇宙 × 水墨 × 涂鸦。四模块混合渲染。</p>
     <p class="meta">7 段 · 每段 ≤10s · 首帧生视频模式</p>
   </div>
 
-  <div class="card">
-    <div class="label">分镜 · 交错 MV</div>
-    <h3>城市醒来 → 半径收缩 → 桥上 → 雨 → 电车 → 长椅</h3>
+  <div class="card glass-card">
+    <div class="label">交错 MV</div>
+    <h3>城市醒来 → 桥上 → 雨 → 电车 → 长椅</h3>
     <p class="desc">日式复古胶片 MV，男女主同城始终错过。岩井俊二式关系影像，记忆式剪辑。</p>
     <p class="meta">6 段 · 每段 ≤10s · 首帧生视频模式</p>
   </div>
 
-  <div class="card">
-    <div class="label">镜头链 · 桥上四镜</div>
-    <h3>远景 → 中景 → 近景 → 特写</h3>
-    <p class="desc">高潮段四镜叙事，两人在桥上的三步距离。四镜完整闭环——接近、停在同一空间、失之交臂、倒影目送背影。</p>
+  <div class="card glass-card">
+    <div class="label">镜头链</div>
+    <h3>桥上四镜：远景 → 中景 → 近景 → 特写</h3>
+    <p class="desc">高潮段叙事链，两人在桥上的三步距离——接近、停在同一空间、失之交臂、倒影目送背影。</p>
     <p class="meta">日式复古胶片 · 写实 × Super 16mm</p>
   </div>
 
   <!-- 人物卡 -->
-  <div class="section-title" id="characters">&#x1f464; 人物卡</div>
+  <div class="section-title" id="characters">人物卡</div>
 
-  <div class="card">
-    <div class="label">角色 · 浪客行</div>
+  <div class="card glass-card">
+    <div class="label">浪客行</div>
     <h3>浪客</h3>
     <p class="desc">精瘦身形，28岁，灰白旧布交领短衣。黑发乱遮半脸，剑挂右腰。井上雄彦水墨写实风。</p>
     <p class="meta">三视图 · 转面序列 · 面部特写 · 手部特写</p>
   </div>
 
-  <div class="card">
-    <div class="label">角色 · 浪客行</div>
+  <div class="card glass-card">
+    <div class="label">浪客行</div>
     <h3>疤面刀客</h3>
     <p class="desc">壮实体型，35岁，墨黑短衣，左脸火焰状烧伤疤痕瓷白。原为寨中首席刀手。</p>
     <p class="meta">三视图 · 转面序列 · 烧伤特写 · 手部特写</p>
   </div>
 
-  <div class="card">
-    <div class="label">角色 · 纵横</div>
+  <div class="card glass-card">
+    <div class="label">纵横</div>
     <h3>武</h3>
     <p class="desc">18岁少年，精瘦未满。灰白短衣，体内金色涂鸦式内力暴走。瞳孔从褐变金。</p>
     <p class="meta">三视图 · 转面序列 · 面部特写 · 能量视觉体系</p>
   </div>
 
-  <div class="card">
-    <div class="label">角色 · 纵横</div>
+  <div class="card glass-card">
+    <div class="label">纵横</div>
     <h3>文</h3>
     <p class="desc">18岁画师。黑直长马尾，靛蓝短襦，右手执秃毛笔。能看见气的流动。</p>
     <p class="meta">三视图 · 转面序列 · 执笔手部特写 · 秃毛笔道具特写</p>
@@ -392,9 +359,41 @@
 
 </div>
 
-<footer>
-  用纯 HTML + CSS 写成 · 本地打开即看
-</footer>
+<footer>2025</footer>
+
+<script>
+  // ===== 背景缓慢变焦 =====
+  const bg = document.querySelector('.bg-layer');
+  window.addEventListener('scroll', () => {
+    const scale = 1 + window.scrollY * 0.00015;
+    bg.style.transform = `scale(${scale})`;
+  });
+
+  // ===== 卡片3D倾斜 + 毛玻璃视差（克制） =====
+  const cards = document.querySelectorAll('.glass-card');
+  document.addEventListener('mousemove', (e) => {
+    const mx = e.clientX;
+    const my = e.clientY;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (mx - cx) / rect.width;
+      const dy = (my - cy) / rect.height;
+
+      // 3D倾斜
+      const rotateY = dx * 6;
+      const rotateX = -dy * 6;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+      // 阴影随倾斜
+      const shadowX = dx * 8;
+      const shadowY = dy * 8;
+      card.style.boxShadow = `${shadowX}px ${shadowY}px 24px rgba(0,0,0,0.3)`;
+    });
+  });
+</script>
 
 </body>
 </html>
