@@ -7,7 +7,7 @@
 <style>
 
   * { margin:0; padding:0; box-sizing:border-box; }
-
+  html { scroll-behavior: smooth; }
   body {
     font-family: "SF Pro Display", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
     background: #0d0d0d;
@@ -15,6 +15,7 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   /* ===== 背景层 · 四模块混合纹理 ===== */
@@ -25,20 +26,24 @@
   }
   /* 网点层 */
   .bg-layer::before {
-    content: ''; position: absolute; inset: 0;
+    content: ''; position: absolute; inset: -20px;
     background-image: radial-gradient(circle, rgba(255,255,255,0.04) 0.5px, transparent 0.5px);
     background-size: 8px 8px;
     animation: halftone-drift 20s linear infinite;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate(var(--mx, 0px), var(--my, 0px));
   }
   /* CMYK错版层 */
   .bg-layer::after {
-    content: ''; position: absolute; inset: 0;
+    content: ''; position: absolute; inset: -20px;
     background:
       radial-gradient(ellipse 120% 80% at 20% 10%, rgba(0,255,255,0.03) 0%, transparent 50%),
       radial-gradient(ellipse 100% 90% at 80% 40%, rgba(255,0,255,0.03) 0%, transparent 50%),
       radial-gradient(ellipse 110% 70% at 50% 80%, rgba(255,255,0,0.03) 0%, transparent 50%);
     mix-blend-mode: screen;
     animation: cmyk-shift 15s ease-in-out infinite alternate;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate(calc(var(--mx, 0px) * 0.5), calc(var(--my, 0px) * 0.5));
   }
   /* 水墨纹理 SVG */
   .ink-texture {
@@ -180,9 +185,8 @@
     <a href="#videos">AIGC视频</a>
     <a href="#remix">影视混剪</a>
     <a href="#music">原创音乐作品</a>
-    <a href="#images">图片</a>
-    <a href="#storyboards">分镜图</a>
-    <a href="#characters">人物资产卡</a>
+    <a href="#drama">AI漫剧短剧</a>
+    <a href="#assets">案例资产库</a>
   </div>
 </nav>
 
@@ -191,7 +195,7 @@
   <div class="hero">
     <img src="头像.jpg" alt="头像" style="width:96px; height:96px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,0.1); margin-bottom:16px;">
     <h1>刘正武52Kiol</h1>
-    <p>AIGC/影视混剪/视觉设计/漫剧短剧/音乐后期制作/个人主页定制</p>
+    <p>AIGC/影视混剪/视觉设计/AI漫剧短剧/音乐后期制作/个人主页定制</p>
     <p style="font-size:13px; color:#555; margin-top:6px; letter-spacing:0;">tel: 15616931964&nbsp;&nbsp;|&nbsp;&nbsp;mail: muageeyen@gmail.com</p>
   </div>
 
@@ -218,7 +222,7 @@
   </div>
 
   <div class="video-card glass-card">
-    <video src="霓虹江湖.mp4" controls style="aspect-ratio:16/9;"></video>
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1mRRwBREHy&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
     <div class="info">
       <h3>AIGC霓虹江湖</h3>
       <p class="desc">东方水墨笔触 · 现代街头视觉</p>
@@ -299,7 +303,7 @@
   </div>
 
   <!-- 音乐 -->
-  <div class="section-title" id="music">音乐</div>
+  <div class="section-title" id="music">原创音乐作品</div>
 
   <style>
     .music-row { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
@@ -364,86 +368,69 @@
     </div>
   </div>
 
-  <!-- 图片 -->
-  <div class="section-title" id="images">图片</div>
+  <!-- 漫剧短剧 -->
+  <div class="section-title" id="drama">AI漫剧短剧</div>
 
-  <div class="img-grid">
-    <div class="img-card glass-card">
-      <img src="教室社交.jpg" style="width:100%; aspect-ratio:16/10; object-fit:cover; display:block;">
-      <div class="info"><h4>教室社团</h4><span>Super 16mm</span></div>
-    </div>
-    <div class="img-card glass-card">
-      <img src="女侠.png" style="width:100%; aspect-ratio:16/10; object-fit:cover; display:block;">
-      <div class="info"><h4>女侠</h4><span>武侠人物</span></div>
-    </div>
-    <div class="img-card glass-card">
-      <img src="水墨武侠1.png" style="width:100%; aspect-ratio:16/10; object-fit:cover; display:block;">
-      <div class="info"><h4>水墨武侠 1</h4><span>水墨写实</span></div>
-    </div>
-    <div class="img-card glass-card">
-      <img src="水墨武侠2.png" style="width:100%; aspect-ratio:16/10; object-fit:cover; display:block;">
-      <div class="info"><h4>水墨武侠 2</h4><span>水墨写实</span></div>
-    </div>
-    <div class="img-card glass-card">
-      <div class="placeholder">抽烟 · 后巷</div>
-      <div class="info"><h4>抽烟 · 后巷</h4><span>miniDV</span></div>
-    </div>
-    <div class="img-card glass-card">
-      <div class="placeholder">教室 · 窗边</div>
-      <div class="info"><h4>教室 · 窗边</h4><span>Super 16mm</span></div>
+  <div class="video-grid">
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=REPLACE&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
+    <div class="info">
+      <h3>作品名称</h3>
+      <p class="desc">介绍</p>
     </div>
   </div>
-
-  <!-- 分镜 -->
-  <div class="section-title" id="storyboards">分镜</div>
-
-  <div class="card glass-card">
-    <div class="label">浪客行</div>
-    <h3>巷口 → 现身 → 断骨 → 离去</h3>
-    <p class="desc">窄巷中浪客与疤面刀客的 33s 完整对决，四段连续分镜。固定机位一点透视，水墨写实风格。</p>
-    <p class="meta">4 段 · 每段 ≤10s · GROK 六段式格式</p>
   </div>
 
-  <div class="card glass-card">
-    <div class="label">交错 MV</div>
-    <h3>城市醒来 → 桥上 → 雨 → 电车 → 长椅</h3>
-    <p class="desc">日式复古胶片 MV，男女主同城始终错过。岩井俊二式关系影像，记忆式剪辑。</p>
-    <p class="meta">6 段 · 每段 ≤10s · 首帧生视频模式</p>
+  <!-- 案例资产库 -->
+  <div class="section-title" id="assets">案例资产库</div>
+
+  <style>
+    .asset-project { margin-bottom: 10px; }
+    .asset-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; cursor: pointer; user-select: none;
+    }
+    .asset-header h3 { font-size: 15px; font-weight: 600; color: #f0f0f0; }
+    .asset-header .arrow { font-size: 12px; color: #666; transition: transform 0.25s; }
+    .asset-project.open .asset-header .arrow { transform: rotate(180deg); }
+    .asset-gallery {
+      display: none; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      padding: 0 20px 16px;
+    }
+    .asset-project.open .asset-gallery { display: grid; }
+    .asset-gallery img {
+      width: 100%; aspect-ratio: 16/10; object-fit: cover;
+      border-radius: 8px; cursor: pointer; transition: transform 0.2s;
+    }
+    .asset-gallery img:hover { transform: scale(1.03); }
+    @media (max-width: 640px) {
+      .asset-gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+
+  <div class="card glass-card asset-project">
+    <div class="asset-header" onclick="this.parentElement.classList.toggle('open')">
+      <h3>浪客行 — 窄巷决斗</h3>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="asset-gallery">
+      <img src="水墨武侠1.png" alt="">
+      <img src="水墨武侠2.png" alt="">
+    </div>
   </div>
 
-  <div class="card glass-card">
-    <div class="label">镜头链</div>
-    <h3>桥上四镜：远景 → 中景 → 近景 → 特写</h3>
-    <p class="desc">高潮段叙事链，两人在桥上的三步距离——接近、停在同一空间、失之交臂、倒影目送背影。</p>
-    <p class="meta">日式复古胶片 · 写实 × Super 16mm</p>
+  <div class="card glass-card asset-project">
+    <div class="asset-header" onclick="this.parentElement.classList.toggle('open')">
+      <h3>纵横江湖 — 教室社交</h3>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="asset-gallery">
+      <img src="教室社交.jpg" alt="">
+      <img src="女侠.png" alt="">
+    </div>
   </div>
 
-  <!-- 人物卡 -->
-  <div class="section-title" id="characters">人物卡</div>
-
-  <div class="card glass-card">
-    <div class="label">浪客行</div>
-    <h3>浪客</h3>
-    <p class="desc">精瘦身形，28岁，灰白旧布交领短衣。黑发乱遮半脸，剑挂右腰。井上雄彦水墨写实风。</p>
-    <p class="meta">三视图 · 转面序列 · 面部特写 · 手部特写</p>
   </div>
-
-  <div class="card glass-card">
-    <div class="label">浪客行</div>
-    <h3>疤面刀客</h3>
-    <p class="desc">壮实体型，35岁，墨黑短衣，左脸火焰状烧伤疤痕瓷白。原为寨中首席刀手。</p>
-    <p class="meta">三视图 · 转面序列 · 烧伤特写 · 手部特写</p>
-  </div>
-
-  <div class="card glass-card">
-    <div class="label">纵横</div>
-    <h3>武</h3>
-    <p class="desc">18岁少年，精瘦未满。灰白短衣，体内金色涂鸦式内力暴走。瞳孔从褐变金。</p>
-    <p class="meta">三视图 · 转面序列 · 面部特写 · 能量视觉体系</p>
-  </div>
-
-
-</div>
 
 <!-- 背景音乐 -->
 <audio id="bgm" src="我只是你的过客.mp3" autoplay muted loop style="display:none;"></audio>
@@ -486,37 +473,85 @@ document.addEventListener('click', function firstClick(){
   const a=document.getElementById('bgm');
   if(a.muted){ a.muted=false; a.play(); document.getElementById('bgm-off').style.display='none'; document.getElementById('bgm-on').style.display='block'; document.getElementById('bgm-btn').style.color='#fff'; }
 }, {once:true});
+
+// 播放视频/音乐时暂停背景音乐
+document.querySelectorAll('video, audio').forEach(media => {
+  if (media.id === 'bgm') return;
+  media.addEventListener('play', () => {
+    const bgm = document.getElementById('bgm');
+    bgm.muted = true;
+    document.getElementById('bgm-off').style.display = 'block';
+    document.getElementById('bgm-on').style.display = 'none';
+    document.getElementById('bgm-btn').style.color = '#888';
+  });
+  media.addEventListener('pause', () => {
+    const bgm = document.getElementById('bgm');
+    bgm.muted = false;
+    document.getElementById('bgm-off').style.display = 'none';
+    document.getElementById('bgm-on').style.display = 'block';
+    document.getElementById('bgm-btn').style.color = '#fff';
+  });
+  media.addEventListener('ended', () => {
+    const bgm = document.getElementById('bgm');
+    bgm.muted = false;
+    document.getElementById('bgm-off').style.display = 'none';
+    document.getElementById('bgm-on').style.display = 'block';
+    document.getElementById('bgm-btn').style.color = '#fff';
+  });
+});
 </script>
 
-<footer>2025</footer>
+<footer>2026/KIOL</footer>
 
 <script>
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-  // 背景缓慢变焦
-  const bg = document.querySelector('.bg-layer');
-  window.addEventListener('scroll', () => {
-    const scale = 1 + window.scrollY * 0.00015;
-    bg.style.transform = `scale(${scale})`;
+  // 导航平滑滚动
+  document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+    link.onclick = function(e) {
+      e.preventDefault();
+      const el = document.querySelector(this.getAttribute('href'));
+      if (!el) return;
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
   });
 
-  // 卡片3D倾斜 — 仅桌面端
+  // 背景缓慢变焦（仅桌面端）
   if (!isMobile) {
-    const cards = document.querySelectorAll('.glass-card');
-    document.addEventListener('mousemove', (e) => {
-      const mx = e.clientX;
-      const my = e.clientY;
-      cards.forEach(card => {
+    const bg = document.querySelector('.bg-layer');
+    window.addEventListener('scroll', () => {
+      const scale = 1 + window.scrollY * 0.00015;
+      bg.style.transform = `scale(${scale})`;
+    });
+  }
+
+  // 卡片3D倾斜 — 仅桌面端，逐卡独立响应
+  if (!isMobile) {
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        const dx = (mx - cx) / rect.width;
-        const dy = (my - cy) / rect.height;
-        const rotateY = dx * 6;
-        const rotateX = -dy * 6;
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        const dx = (e.clientX - cx) / rect.width;
+        const dy = (e.clientY - cy) / rect.height;
+        card.style.transform = `perspective(800px) rotateX(${-dy * 6}deg) rotateY(${dx * 6}deg)`;
         card.style.boxShadow = `${dx * 8}px ${dy * 8}px 24px rgba(0,0,0,0.3)`;
       });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+      });
+    });
+  }
+
+  // 背景磁吸 — 网点层跟随鼠标微移
+  if (!isMobile) {
+    const bgBefore = document.querySelector('.bg-layer');
+    document.addEventListener('mousemove', (e) => {
+      const dx = (e.clientX - window.innerWidth / 2) / window.innerWidth;
+      const dy = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+      bgBefore.style.setProperty('--mx', dx * 12 + 'px');
+      bgBefore.style.setProperty('--my', dy * 12 + 'px');
     });
   }
 </script>
