@@ -7,7 +7,6 @@
 <style>
 
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; }
   body {
     font-family: "SF Pro Display", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
     background: #0d0d0d;
@@ -15,7 +14,6 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    scroll-behavior: smooth;
   }
 
   /* ===== 背景层 · 四模块混合纹理 ===== */
@@ -79,10 +77,12 @@
   }
   nav .inner {
     max-width: 800px; margin:0 auto; padding:0 24px;
-    display: flex; gap: 28px;
+    display: flex; gap: 22px; overflow-x: auto; white-space: nowrap;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
   }
+  nav .inner::-webkit-scrollbar { display: none; }
   nav a {
-    text-decoration: none; color: #999; font-size: 14px; font-weight: 500;
+    text-decoration: none; color: #999; font-size: 14px; font-weight: 500; flex-shrink: 0;
     letter-spacing: 0.5px; transition: color 0.2s;
   }
   nav a:hover { color: #fff; }
@@ -168,6 +168,8 @@
   @media (max-width: 640px) {
     .container { padding: 28px 16px 60px; }
     .hero { padding: 48px 0 40px; }
+    nav a { font-size: 13px; }
+    nav .inner { gap: 14px; padding:0 16px; }
     .hero h1 { font-size: 26px; }
     .img-grid { grid-template-columns: repeat(2, 1fr); }
     .video-grid { grid-template-columns: 1fr; }
@@ -375,10 +377,10 @@
 
   <div class="video-grid">
   <div class="video-card glass-card">
-    <iframe src="//player.bilibili.com/player.html?bvid=REPLACE&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1biRNBvEcp&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
     <div class="info">
-      <h3>作品名称</h3>
-      <p class="desc">介绍</p>
+      <h3>三战同人短剧-乱世谋定</h3>
+      <p class="desc">AI漫剧短剧作品</p>
     </div>
   </div>
   </div>
@@ -430,7 +432,7 @@
   <div class="card glass-card asset-project">
     <img class="asset-cover" src="谋定天下封面.png" onclick="this.parentElement.classList.toggle('open')">
     <div class="asset-meta" onclick="this.parentElement.classList.toggle('open')">
-      <h3>三国志-谋定天下</h3>
+      <h3>三国志-乱世谋定</h3>
       <span class="arrow">▼</span>
     </div>
     <div class="asset-body">
@@ -657,7 +659,7 @@
   </div>
 
 <!-- 背景音乐 -->
-<audio id="bgm" src="我只是你的过客.mp3" autoplay muted loop style="display:none;"></audio>
+<audio id="bgm" src="我只是你的过客.mp3" loop style="display:none;"></audio>
 <style>
 #bgm-btn {
   position:fixed; bottom:24px; right:24px; z-index:999;
@@ -693,10 +695,6 @@ function toggleBgm(){
     document.getElementById('bgm-btn').style.color='#888';
   }
 }
-document.addEventListener('click', function firstClick(){
-  const a=document.getElementById('bgm');
-  if(a.muted){ a.muted=false; a.play(); document.getElementById('bgm-off').style.display='none'; document.getElementById('bgm-on').style.display='block'; document.getElementById('bgm-btn').style.color='#fff'; }
-}, {once:true});
 
 // 播放视频/音乐时暂停背景音乐
 document.querySelectorAll('video, audio').forEach(media => {
