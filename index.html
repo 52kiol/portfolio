@@ -191,7 +191,8 @@
   <div class="hero">
     <img src="头像.jpg" alt="头像" style="width:96px; height:96px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,0.1); margin-bottom:16px;">
     <h1>刘正武52Kiol</h1>
-    <p>AIGC/影视混剪/视觉设计/音乐后期制作/个人主页定制</p>
+    <p>AIGC/影视混剪/视觉设计/漫剧短剧/音乐后期制作/个人主页定制</p>
+    <p style="font-size:13px; color:#555; margin-top:6px; letter-spacing:0;">tel: 15616931964&nbsp;&nbsp;|&nbsp;&nbsp;mail: muageeyen@gmail.com</p>
   </div>
 
   <!-- AIGC视频 -->
@@ -271,32 +272,95 @@
       <p class="desc">双城之战2 · 混剪高燃</p>
     </div>
   </div>
+
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1qtcPePEVZ&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
+    <div class="info">
+      <h3>我很热爱自由 不想这么仓促放弃它</h3>
+      <p class="desc">电影美学 · 小妇人</p>
+    </div>
+  </div>
+
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1JFrmYCEQH&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
+    <div class="info">
+      <h3>破碎的风 扭曲的爱</h3>
+      <p class="desc">电影美学 · 呼啸山庄</p>
+    </div>
+  </div>
+
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV12aK7eiESg&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
+    <div class="info">
+      <h3>我写了很多封信 一封也没送到她手上</h3>
+      <p class="desc">电影美学 · 情书</p>
+    </div>
+  </div>
   </div>
 
   <!-- 音乐 -->
   <div class="section-title" id="music">音乐</div>
 
-  <div class="card glass-card">
-    <audio src="我只是你的过客.mp3" controls style="width:100%; display:block;"></audio>
-    <div style="padding:16px 22px;">
-      <h3>我只是你的过客#刘正武/于嘉懿/何雨南</h3>
-      <p class="desc"></p>
-    </div>
-  </div>
+  <style>
+    .music-row { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .music-row:last-child { border-bottom:none; }
+    .music-num { width:20px; text-align:center; font-size:12px; color:#555; flex-shrink:0; }
+    .music-art { width:46px; height:46px; border-radius:6px; flex-shrink:0; }
+    .music-info { flex:1; min-width:0; }
+    .music-info .title { font-size:14px; font-weight:600; color:#f0f0f0; display:block; }
+    .music-info .artist { font-size:12px; color:#777; margin-top:1px; }
+    .music-row audio { width:160px; height:32px; flex-shrink:0; }
+    @media (max-width:640px) {
+      .music-row { flex-wrap:wrap; }
+      .music-row audio { width:100%; margin-top:8px; }
+    }
+  </style>
 
-  <div class="card glass-card">
-    <audio src="song_1974181331.mp3" controls style="width:100%; display:block;"></audio>
-    <div style="padding:16px 22px;">
-      <h3>爱能打破时空但跨不过距离#刘正武</h3>
-      <p class="desc"></p>
+  <div class="card glass-card" style="padding:14px 20px;">
+    <div class="music-row">
+      <span class="music-num">1</span>
+      <img class="music-art" src="我只是你的过客封面.jpg" style="object-fit:cover;">
+      <div class="music-info">
+        <span class="title">我只是你的过客</span>
+        <span class="artist">刘正武 / 于嘉懿 / 何雨南</span>
+      </div>
+      <audio src="我只是你的过客.mp3" controls></audio>
     </div>
-  </div>
-
-  <div class="card glass-card">
-    <audio src="song_1954853016.mp3" controls style="width:100%; display:block;"></audio>
-    <div style="padding:16px 22px;">
-      <h3>不合时宜的遇见#刘正武/王子明</h3>
-      <p class="desc"></p>
+    <div class="music-row">
+      <span class="music-num">2</span>
+      <img class="music-art" src="专辑封面.jpg" style="object-fit:cover;">
+      <div class="music-info">
+        <span class="title">爱能打破时空但跨不过距离</span>
+        <span class="artist">刘正武</span>
+      </div>
+      <audio src="song_1974181331.mp3" controls></audio>
+    </div>
+    <div class="music-row">
+      <span class="music-num">3</span>
+      <img class="music-art" src="不合时宜的遇见封面.jpg" style="object-fit:cover;">
+      <div class="music-info">
+        <span class="title">不合时宜的遇见</span>
+        <span class="artist">刘正武 / 王子明</span>
+      </div>
+      <audio src="song_1954853016.mp3" controls></audio>
+    </div>
+    <div class="music-row">
+      <span class="music-num">4</span>
+      <img class="music-art" src="乌云封面.jpg" style="object-fit:cover;">
+      <div class="music-info">
+        <span class="title">等乌云散去</span>
+        <span class="artist">刘正武/乐也/于嘉懿/知晏</span>
+      </div>
+      <audio src="刘正武,乐也,于嘉懿 - 等乌云散去.mp3" controls></audio>
+    </div>
+    <div class="music-row">
+      <span class="music-num">5</span>
+      <img class="music-art" src="冷水江封面.jpg" style="object-fit:cover;">
+      <div class="music-info">
+        <span class="title">冷水江的雪飘不到长沙</span>
+        <span class="artist">刘正武</span>
+      </div>
+      <audio src="song_1957407993.mp3" controls></audio>
     </div>
   </div>
 
@@ -380,6 +444,49 @@
 
 
 </div>
+
+<!-- 背景音乐 -->
+<audio id="bgm" src="我只是你的过客.mp3" autoplay muted loop style="display:none;"></audio>
+<style>
+#bgm-btn {
+  position:fixed; bottom:24px; right:24px; z-index:999;
+  width:40px; height:40px; border-radius:50%;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  color: #888; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: all 0.3s ease;
+}
+#bgm-btn:hover { background:rgba(255,255,255,0.1); color:#fff; }
+#bgm-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.5; }
+</style>
+<div id="bgm-btn" onclick="toggleBgm()" title="背景音乐">
+  <!-- 静音图标 -->
+  <svg id="bgm-off" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+  <!-- 播放图标 -->
+  <svg id="bgm-on" viewBox="0 0 24 24" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19 9a5 5 0 0 1 0 6"/><path d="M15 8a8 8 0 0 1 0 10"/></svg>
+</div>
+<script>
+function toggleBgm(){
+  const a=document.getElementById('bgm');
+  const off=document.getElementById('bgm-off');
+  const on=document.getElementById('bgm-on');
+  if(a.muted){
+    a.muted=false; a.play();
+    off.style.display='none'; on.style.display='block';
+    document.getElementById('bgm-btn').style.color='#fff';
+  }else{
+    a.muted=true;
+    off.style.display='block'; on.style.display='none';
+    document.getElementById('bgm-btn').style.color='#888';
+  }
+}
+document.addEventListener('click', function firstClick(){
+  const a=document.getElementById('bgm');
+  if(a.muted){ a.muted=false; a.play(); document.getElementById('bgm-off').style.display='none'; document.getElementById('bgm-on').style.display='block'; document.getElementById('bgm-btn').style.color='#fff'; }
+}, {once:true});
+</script>
 
 <footer>2025</footer>
 
