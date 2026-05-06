@@ -100,6 +100,8 @@
   }
   .tool-card h4 { font-size:14px; font-weight:600; color:#f0f0f0; }
   .tool-card .hint { font-size:11px; color:#555; }
+  .tool-card .hint.copy { cursor:pointer; color:#c44f4f; transition:color 0.2s; }
+  .tool-card .hint.copy:hover { color:#e06060; }
   .tool-card .tag {
     font-size:10px; padding:3px 8px; border-radius:10px;
     background:rgba(196,79,79,0.12); color:#c44f4f;
@@ -209,17 +211,27 @@
     <a class="tool-card glass-card" href="https://wwayc.lanzoub.com/iSdog3n29ung" target="_blank" rel="noopener">
       <div class="icon">&#128230;</div>
       <h4>Git 64bit</h4>
-      <span class="hint">提取码 67no</span>
+      <span class="hint copy" onclick="event.preventDefault();copyCmd('67no')" title="点击复制提取码">提取码 67no</span>
     </a>
     <a class="tool-card glass-card" href="https://wwayc.lanzoub.com/ioqPy3n29vmb" target="_blank" rel="noopener">
       <div class="icon">&#128230;</div>
       <h4>Git ARM</h4>
-      <span class="hint">提取码 f3m1</span>
+      <span class="hint copy" onclick="event.preventDefault();copyCmd('f3m1')" title="点击复制提取码">提取码 f3m1</span>
     </a>
     <a class="tool-card glass-card" href="https://www.google.com/intl/zh-CN/chrome/" target="_blank" rel="noopener">
       <div class="icon">&#127760;</div>
       <h4>Chrome</h4>
       <span class="hint">谷歌浏览器</span>
+    </a>
+    <a class="tool-card glass-card" href="https://nodejs.org/zh-cn" target="_blank" rel="noopener">
+      <div class="icon">&#128295;</div>
+      <h4>Node.js</h4>
+      <span class="tag green">LTS</span>
+    </a>
+    <a class="tool-card glass-card" href="https://code.visualstudio.com/" target="_blank" rel="noopener">
+      <div class="icon">&#9000;</div>
+      <h4>VS Code</h4>
+      <span class="tag blue">编辑器</span>
     </a>
   </div>
 
@@ -228,16 +240,54 @@
   <div class="tool-grid">
     <a class="tool-card glass-card" href="https://love.mmy567.com/#/dashboard" target="_blank" rel="noopener">
       <div class="icon">&#127760;</div>
-      <h4>魔法上网</h4>
-      <span class="tag">网络</span>
+      <h4>神奇妙妙工具</h4>
+      <span class="tag">妙妙屋</span>
+    </a>
+  </div>
+
+  <!-- 系统工具 -->
+  <div class="section-title">系统工具</div>
+  <div class="tool-grid">
+    <a class="tool-card glass-card" href="https://wwayc.lanzoub.com/iiHKV3n29yhe" target="_blank" rel="noopener">
+      <div class="icon">&#128187;</div>
+      <h4>CC-switch-Win系统</h4>
+      <span class="hint copy" onclick="event.preventDefault();copyCmd('cxjy')" title="点击复制提取码">提取码 cxjy</span>
+    </a>
+    <a class="tool-card glass-card" href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noopener">
+      <div class="icon">&#9881;</div>
+      <h4>CCSWITCH官方</h4>
+      <span class="tag blue">SW</span>
+    </a>
+    <a class="tool-card glass-card" href="https://wwayc.lanzoub.com/i9hKz3n29uxg" target="_blank" rel="noopener">
+      <div class="icon">&#128187;</div>
+      <h4>CC-switch-Mac</h4>
+      <span class="hint copy" onclick="event.preventDefault();copyCmd('cxjy')" title="点击复制提取码">提取码 cxjy</span>
     </a>
   </div>
 
   <!-- 终端命令 -->
   <div class="section-title">终端命令</div>
-  <div class="cmd-card glass-card" onclick="copyCmd('npm install -g @anthropic-ai/claude-code')">
-    <div class="cmd-label">Claude Code 安装</div>
-    <div class="cmd-text">npm install -g @anthropic-ai/claude-code</div>
+  <div class="cmd-card glass-card" onclick="copyCmd('irm https://daheiai.com/cc.ps1 | iex')">
+    <div class="cmd-label">Claude Code · Win 国内镜像</div>
+    <div class="cmd-text">irm https://daheiai.com/cc.ps1 | iex</div>
+    <div class="copy-hint">点击复制到剪贴板</div>
+  </div>
+
+  <div class="cmd-card glass-card" onclick="copyCmd('irm https://claude.ai/install.ps1 | iex')">
+    <div class="cmd-label">Claude Code · Win 官方</div>
+    <div class="cmd-text">irm https://claude.ai/install.ps1 | iex</div>
+    <div class="copy-hint">点击复制到剪贴板</div>
+  </div>
+
+  <div class="cmd-card glass-card" onclick="copyCmd('curl -fsSL https://daheiai.com/cc.sh | sh')">
+    <div class="cmd-label">Claude Code · Mac 国内镜像</div>
+    <div class="cmd-text">curl -fsSL https://daheiai.com/cc.sh | sh</div>
+    <div class="copy-hint">点击复制到剪贴板</div>
+  </div>
+
+  <div class="cmd-card glass-card" onclick="copyCmd('curl -fsSL https://claude.ai/install.sh | sh')">
+    <div class="cmd-label">Claude Code · Mac 官方</div>
+    <div class="cmd-text">curl -fsSL https://claude.ai/install.sh | sh</div>
     <div class="copy-hint">点击复制到剪贴板</div>
   </div>
 
