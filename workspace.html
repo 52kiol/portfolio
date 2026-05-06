@@ -7,156 +7,251 @@
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
-    font-family: "SF Pro Display", -apple-system, "PingFang SC", sans-serif;
-    background: #1e1e2e; overflow:hidden; height:100vh;
-    user-select: none; -webkit-user-select: none;
+    font-family: "SF Pro Display", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: #0d0d0d; color: #e0e0e0; line-height:1.6;
+    -webkit-font-smoothing: antialiased; overflow-x:hidden;
   }
 
-  /* ===== 桌面 ===== */
-  .desktop {
-    position:fixed; inset:0;
+  /* ===== 背景纹理 ===== */
+  .bg-layer { position:fixed; inset:0; z-index:0; }
+  .bg-layer::before {
+    content:''; position:absolute; inset:-20px;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 0.5px, transparent 0.5px);
+    background-size: 8px 8px;
+  }
+  .bg-layer::after {
+    content:''; position:absolute; inset:-20px;
     background:
-      radial-gradient(ellipse 80% 60% at 30% 20%, rgba(120,120,255,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 70% 60%, rgba(255,180,100,0.10) 0%, transparent 60%),
-      linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      radial-gradient(ellipse 120% 80% at 20% 10%, rgba(0,255,255,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 100% 90% at 80% 40%, rgba(255,0,255,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 110% 70% at 50% 80%, rgba(255,255,0,0.03) 0%, transparent 50%);
+    mix-blend-mode: screen;
+  }
+  .ink-texture {
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.25;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Cfilter id='ink'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23ink)' opacity='0.4'/%3E%3C/svg%3E");
+    background-size: cover;
   }
 
-  /* ===== 菜单栏 ===== */
-  .menubar {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    height:28px; background:rgba(30,30,40,0.75);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    display:flex; align-items:center; padding:0 12px;
-    border-bottom:0.5px solid rgba(255,255,255,0.08);
-    font-size:12px; color:#bbb;
+  /* ===== 导航 ===== */
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(13,13,13,0.4); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 4px 20px rgba(0,0,0,0.2), inset 0 -1px 0 rgba(255,255,255,0.08);
+    padding:14px 0;
   }
-  .menubar .apple { font-size:15px; margin-right:16px; color:#ccc; cursor:default; }
-  .menubar span { margin-right:18px; cursor:default; }
-  .menubar .time { margin-left:auto; color:#888; }
+  nav .inner {
+    max-width:800px; margin:0 auto; padding:0 24px;
+    display:flex; gap:22px; align-items:center;
+  }
+  nav a {
+    text-decoration:none; color:#999; font-size:14px; font-weight:500;
+    letter-spacing:0.5px; transition: color 0.2s;
+  }
+  nav a:hover { color:#c44f4f; }
+  nav .home { color:#c44f4f; }
 
-  /* ===== 桌面图标网格 ===== */
-  .icon-grid {
-    position:absolute; top:60px; left:24px;
-    display:flex; flex-wrap:wrap; gap:18px;
-    max-width:calc(100vw - 48px);
-  }
-  .desktop-icon {
-    width:88px; display:flex; flex-direction:column; align-items:center;
-    cursor:pointer; padding:8px 4px; border-radius:8px;
-    transition: background 0.15s;
-    text-decoration:none;
-  }
-  .desktop-icon:hover { background:rgba(255,255,255,0.08); }
-  .desktop-icon:active { background:rgba(255,255,255,0.15); }
+  /* ===== 主容器 ===== */
+  .container { position:relative; z-index:1; max-width:800px; margin:0 auto; padding:48px 24px 80px; }
 
-  .desktop-icon .icon-img {
-    width:56px; height:56px; border-radius:12px;
+  /* ===== 头部 ===== */
+  .hero { padding:60px 0 40px; text-align:center; }
+  .hero h1 {
+    font-size:36px; font-weight:600; letter-spacing:-1px;
+    background:linear-gradient(180deg, #fff, #999);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    margin-bottom:6px;
+  }
+  .hero p { font-size:13px; color:#666; letter-spacing:1px; }
+
+  /* ===== 分类标题 ===== */
+  .section-title {
+    font-size:13px; font-weight:600; color:#555;
+    text-transform:uppercase; letter-spacing:1.5px;
+    margin:56px 0 24px; padding-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ===== 毛玻璃卡片 ===== */
+  .glass-card {
+    background:linear-gradient(to bottom, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+    backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px);
+    border:1px solid rgba(255,255,255,0.08); border-radius:18px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+    transition:transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+    will-change:transform; transform-style:preserve-3d; perspective:800px;
+  }
+
+  /* ===== 工具网格 ===== */
+  .tool-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
+  @media (max-width:640px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .tool-card {
+    padding:20px; text-align:center; text-decoration:none; color:inherit;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .tool-card .icon {
+    width:44px; height:44px; border-radius:10px;
     display:flex; align-items:center; justify-content:center;
-    font-size:28px; margin-bottom:6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-  .desktop-icon .icon-label {
-    font-size:11px; color:#ddd; text-align:center;
-    line-height:1.3; word-break:keep-all;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  }
-
-  /* 各图标颜色 */
-  .icon-globe  { background:linear-gradient(135deg, #4a9eff, #2563eb); }
-  .icon-folder { background:linear-gradient(135deg, #5b9cf5, #3b82f6); }
-  .icon-code   { background:linear-gradient(135deg, #007acc, #005a9e); }
-  .icon-video  { background:linear-gradient(135deg, #7c3aed, #6d28d9); }
-  .icon-image  { background:linear-gradient(135deg, #f59e0b, #d97706); }
-  .icon-music  { background:linear-gradient(135deg, #ef4444, #dc2626); }
-  .icon-zip    { background:linear-gradient(135deg, #6b7280, #4b5563); }
-  .icon-app    { background:linear-gradient(135deg, #10b981, #059669); }
-
-  /* ===== Dock ===== */
-  .dock {
-    position:fixed; bottom:12px; left:50%; transform:translateX(-50%); z-index:100;
-    display:flex; gap:6px; padding:8px 14px;
+    font-size:22px;
     background:rgba(255,255,255,0.06);
-    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    border:0.5px solid rgba(255,255,255,0.10);
-    border-radius:18px;
+    border:0.5px solid rgba(255,255,255,0.1);
   }
-  .dock-item {
-    width:40px; height:40px; border-radius:10px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:20px; cursor:pointer; transition: all 0.2s;
-    position:relative; text-decoration:none;
+  .tool-card h4 { font-size:14px; font-weight:600; color:#f0f0f0; }
+  .tool-card .hint { font-size:11px; color:#555; }
+  .tool-card .tag {
+    font-size:10px; padding:3px 8px; border-radius:10px;
+    background:rgba(196,79,79,0.12); color:#c44f4f;
   }
-  .dock-item:hover { transform:scale(1.25) translateY(-6px); }
-  .dock-item::after {
-    content:''; position:absolute; bottom:-6px;
-    width:4px; height:4px; border-radius:50%;
-    background:rgba(255,255,255,0.3); opacity:0; transition:opacity 0.2s;
-  }
-  .dock-item:hover::after { opacity:1; }
+  .tool-card .tag.blue { background:rgba(74,158,255,0.12); color:#4a9eff; }
+  .tool-card .tag.green { background:rgba(16,185,129,0.12); color:#10b981; }
 
-  /* ===== 右键菜单（装饰） ===== */
-  .context-hint {
-    position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
-    font-size:11px; color:rgba(255,255,255,0.2); pointer-events:none;
+  /* ===== 命令卡片 ===== */
+  .cmd-card {
+    padding:18px 22px; cursor:pointer; margin-bottom:10px;
   }
+  .cmd-card .cmd-label { font-size:12px; color:#777; margin-bottom:6px; }
+  .cmd-card .cmd-text {
+    font-family:"SF Mono","Cascadia Code",monospace;
+    font-size:13px; color:#10b981; word-break:break-all;
+  }
+  .cmd-card .copy-hint { font-size:11px; color:#555; margin-top:8px; }
+
+  /* ===== 页脚 ===== */
+  footer { text-align:center; color:#444; font-size:12px; padding:60px 0; position:relative; z-index:1; }
+
+  /* ===== Toast ===== */
+  .toast {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.9); color:#fff; padding:14px 28px;
+    border-radius:12px; font-size:13px; z-index:999; pointer-events:none;
+    opacity:0; transition:opacity 0.2s;
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    border:0.5px solid rgba(255,255,255,0.1);
+  }
+  .toast.show { opacity:1; }
+  .toast .cmd { color:#10b981; font-family:"SF Mono","Cascadia Code",monospace; display:block; margin-top:4px; font-size:12px; }
 </style>
 </head>
 <body>
 
-<!-- 菜单栏 -->
-<div class="menubar">
-  <span class="apple">&#63743;</span>
-  <span>Finder</span>
-  <span>文件</span>
-  <span>编辑</span>
-  <span>显示</span>
-  <span>窗口</span>
-  <span class="time" id="menutime"></span>
-</div>
+<div class="bg-layer"></div>
+<div class="ink-texture"></div>
 
-<!-- 桌面 -->
-<div class="desktop">
+<nav>
+  <div class="inner">
+    <a href="index.html" class="home">52Kiol</a>
+    <a href="index.html">← 返回主页</a>
+  </div>
+</nav>
 
-  <!-- 图标 -->
-  <div class="icon-grid">
-    <a class="desktop-icon" href="https://love.mmy567.com/#/dashboard" target="_blank" rel="noopener">
-      <div class="icon-img icon-globe">&#127760;</div>
-      <span class="icon-label">魔法上网</span>
+<div class="container">
+
+  <div class="hero">
+    <h1>工作台</h1>
+    <p>工具与资源</p>
+  </div>
+
+  <!-- AI 平台 -->
+  <div class="section-title">AI 平台</div>
+  <div class="tool-grid">
+    <a class="tool-card glass-card" href="https://chatgpt.com/" target="_blank" rel="noopener">
+      <div class="icon">&#10036;</div>
+      <h4>ChatGPT</h4>
+      <span class="tag green">AI</span>
     </a>
+    <a class="tool-card glass-card" href="https://grok.com/c/6ed4fead-f00c-4ae4-a25f-dc3677da6ae4?rid=79256ab2-9eb6-4a4a-ac02-890b1de44bc3" target="_blank" rel="noopener">
+      <div class="icon">&#10036;</div>
+      <h4>Grok</h4>
+      <span class="tag green">AI</span>
+    </a>
+    <a class="tool-card glass-card" href="https://platform.deepseek.com/profile" target="_blank" rel="noopener">
+      <div class="icon">&#9677;</div>
+      <h4>DeepSeek</h4>
+      <span class="tag green">API</span>
+    </a>
+    <a class="tool-card glass-card" href="https://ai.t8star.cn/dashboard" target="_blank" rel="noopener">
+      <div class="icon">&#9733;</div>
+      <h4>贞贞API</h4>
+      <span class="tag green">API</span>
+    </a>
+  </div>
 
-    <div class="desktop-icon" style="cursor:default; opacity:0.35;">
-      <div class="icon-img icon-code">&#9000;</div>
-      <span class="icon-label">即将上线</span>
-    </div>
+  <!-- AI 绘画 / 视频 -->
+  <div class="section-title">AI 绘画 · 视频</div>
+  <div class="tool-grid">
+    <a class="tool-card glass-card" href="https://www.liblib.tv/" target="_blank" rel="noopener">
+      <div class="icon">&#127917;</div>
+      <h4>里布TV</h4>
+      <span class="tag">绘画</span>
+    </a>
+    <a class="tool-card glass-card" href="https://www.runninghub.ai/ai-detail/2046779730912878594?outputId=2049047256807710721" target="_blank" rel="noopener">
+      <div class="icon">&#9654;</div>
+      <h4>RunningHub</h4>
+      <span class="tag">视频</span>
+    </a>
+    <a class="tool-card glass-card" href="https://www.pinterest.com/pin/21251429487183196/" target="_blank" rel="noopener">
+      <div class="icon">&#128247;</div>
+      <h4>Pinterest</h4>
+      <span class="tag blue">参考</span>
+    </a>
+  </div>
 
-    <div class="desktop-icon" style="cursor:default; opacity:0.35;">
-      <div class="icon-img icon-folder">&#128193;</div>
-      <span class="icon-label">即将上线</span>
-    </div>
+  <!-- 开发工具 -->
+  <div class="section-title">开发工具</div>
+  <div class="tool-grid">
+    <a class="tool-card glass-card" href="https://git-scm.com/install/windows" target="_blank" rel="noopener">
+      <div class="icon">&#9000;</div>
+      <h4>Git</h4>
+      <span class="hint">官网</span>
+    </a>
+    <a class="tool-card glass-card" href="https://wwayc.lanzoub.com/iSdog3n29ung" target="_blank" rel="noopener">
+      <div class="icon">&#128230;</div>
+      <h4>Git 64bit</h4>
+      <span class="hint">提取码 67no</span>
+    </a>
+    <a class="tool-card glass-card" href="https://wwayc.lanzoub.com/ioqPy3n29vmb" target="_blank" rel="noopener">
+      <div class="icon">&#128230;</div>
+      <h4>Git ARM</h4>
+      <span class="hint">提取码 f3m1</span>
+    </a>
+  </div>
+
+  <!-- 网络工具 -->
+  <div class="section-title">网络工具</div>
+  <div class="tool-grid">
+    <a class="tool-card glass-card" href="https://love.mmy567.com/#/dashboard" target="_blank" rel="noopener">
+      <div class="icon">&#127760;</div>
+      <h4>魔法上网</h4>
+      <span class="tag">网络</span>
+    </a>
+  </div>
+
+  <!-- 终端命令 -->
+  <div class="section-title">终端命令</div>
+  <div class="cmd-card glass-card" onclick="copyCmd('npm install -g @anthropic-ai/claude-code')">
+    <div class="cmd-label">Claude Code 安装</div>
+    <div class="cmd-text">npm install -g @anthropic-ai/claude-code</div>
+    <div class="copy-hint">点击复制到剪贴板</div>
   </div>
 
 </div>
 
-<!-- 提示 -->
-<div class="context-hint">双击图标打开 · 右键查看更多</div>
+<footer>2026 · 52Kiol</footer>
 
-<!-- Dock -->
-<div class="dock">
-  <a class="dock-item" href="index.html" title="返回主页" style="background:linear-gradient(135deg,#c44f4f,#a33);">&#127968;</a>
-  <a class="dock-item" href="https://love.mmy567.com/#/dashboard" target="_blank" rel="noopener" title="魔法上网" style="background:linear-gradient(135deg,#4a9eff,#2563eb);">&#127760;</a>
-  <div class="dock-item" style="background:linear-gradient(135deg,#6b7280,#4b5563); font-size:14px;">&#9881;</div>
-</div>
+<!-- Toast -->
+<div class="toast" id="toast">已复制到剪贴板<span class="cmd" id="toastCmd"></span></div>
 
 <script>
-// 菜单栏时间
-(function tick(){
-  const now = new Date();
-  document.getElementById('menutime').textContent =
-    now.toLocaleDateString('zh-CN',{weekday:'short',month:'short',day:'numeric'}) +
-    ' ' + now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
-  setTimeout(tick,30000);
-})();
-tick();
+function copyCmd(cmd) {
+  navigator.clipboard.writeText(cmd).then(() => {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastCmd').textContent = cmd;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  });
+}
 </script>
 
 </body>
