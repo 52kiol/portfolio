@@ -191,6 +191,66 @@
   /* ===== 页脚 ===== */
   footer { text-align: center; color: #444; font-size: 12px; padding: 60px 0; position: relative; z-index: 1; }
 
+  /* ===== 媒体新闻卡片 ===== */
+  .news-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .news-card {
+    display: flex;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+  .news-card:hover {
+    border-color: rgba(196,79,79,0.25);
+    box-shadow: 0 8px 32px rgba(196,79,79,0.08), 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .news-card .news-cover {
+    width: 160px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 14px 0 0 14px;
+  }
+  .news-card .news-cover-placeholder {
+    width: 160px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #333;
+    border-radius: 14px 0 0 14px;
+  }
+  .news-card .info {
+    padding: 18px 20px;
+    flex: 1;
+  }
+  .news-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin-bottom: 4px;
+  }
+  .news-card .desc {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .news-card .meta {
+    font-size: 11px;
+    color: #555;
+  }
+  .news-card .source-link {
+    color: #c44f4f;
+    font-size: 11px;
+    font-weight: 500;
+    margin-left: 8px;
+  }
+
   /* ===== 手机 ===== */
   @media (max-width: 640px) {
     .container { padding: 28px 16px 60px; }
@@ -218,6 +278,8 @@
     <a href="#assets">案例资产库</a>
     <a href="#comfyui">ComfyUI工作流</a>
     <a href="#agent">Agent Skill</a>
+    <a href="#news">媒体新闻</a>
+    <a href="#news-video">新闻视频</a>
   </div>
 </nav>
 
@@ -691,6 +753,53 @@
     <h3>GROK提示词分镜增强</h3>
     <p class="desc">GROK V6 提示词分镜增强第五版</p>
     <p class="meta"><a href="GROK提示词分镜增强第五版.txt" style="color:#888;">下载文件</a></p>
+  </div>
+
+  <!-- 媒体新闻 -->
+  <div class="section-title" id="news">媒体新闻</div>
+
+  <div class="news-grid">
+    <!-- 新闻卡片示例 · 替换为你的真实新闻 -->
+    <a class="news-card glass-card" href="#" target="_blank" rel="noopener">
+      <div class="news-cover-placeholder">&#128240;</div>
+      <div class="info">
+        <h3>作品《夜上海》入选AIGC短片展</h3>
+        <p class="desc">STAY WITH ME 系列获选参展，纸醉金迷的赛博外滩美学引发关注。</p>
+        <p class="meta">2026-07-15 · 媒体来源</p>
+      </div>
+    </a>
+
+    <a class="news-card glass-card" href="#" target="_blank" rel="noopener">
+      <div class="news-cover-placeholder">&#128240;</div>
+      <div class="info">
+        <h3>与XX品牌达成AI短片合作</h3>
+        <p class="desc">负责品牌视觉短片创作，融合东方水墨与赛博朋克风格。</p>
+        <p class="meta">2026-06-28 · 媒体报道</p>
+      </div>
+    </a>
+
+    <a class="news-card glass-card" href="#" target="_blank" rel="noopener">
+      <div class="news-cover-placeholder">&#128240;</div>
+      <div class="info">
+        <h3>AI影视混剪新作引发行业热议</h3>
+        <p class="desc">影像叙事新尝试，探索AI与传统电影美学的边界。</p>
+        <p class="meta">2026-06-10 · 行业动态</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- 新闻视频 -->
+  <div class="section-title" id="news-video">新闻视频</div>
+
+  <div class="video-grid">
+  <div class="video-card glass-card">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1Pxgy68Erk&high_quality=1" style="aspect-ratio:16/9;" allowfullscreen></iframe>
+    <div class="info">
+      <h3>新闻1</h3>
+      <p class="desc">新闻视频</p>
+      <p class="meta">2026-07</p>
+    </div>
+  </div>
   </div>
 
   </div>
